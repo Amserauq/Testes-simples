@@ -1,0 +1,55 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def calcular(operacao):
+    try:
+        num1 = float(entrada1.get())
+        num2 = float(entrada2.get())
+
+        if operacao == "+":
+            resultado = num1 + num2
+        elif operacao == "-":
+            resultado = num1 - num2
+        elif operacao == "*":
+            resultado = num1 * num2
+        elif operacao == "/":
+            if num2 == 0:
+                messagebox.showerror("Erro", "Divisão por zero!")
+                return
+            resultado = num1 / num2
+
+        resultado_label.config(text=f"Resultado: {resultado}")
+
+    except ValueError:
+        messagebox.showerror("Erro", "Digite apenas números!")
+
+# Janela principal
+janela = tk.Tk()
+janela.title("Calculadora")
+janela.geometry("300x250")
+janela.resizable(False, False)
+
+# Entradas
+tk.Label(janela, text="Primeiro número:").pack()
+entrada1 = tk.Entry(janela)
+entrada1.pack()
+
+tk.Label(janela, text="Segundo número:").pack()
+entrada2 = tk.Entry(janela)
+entrada2.pack()
+
+# Botões
+frame_botoes = tk.Frame(janela)
+frame_botoes.pack(pady=10)
+
+tk.Button(frame_botoes, text="+", width=5, command=lambda: calcular("+")).grid(row=0, column=0, padx=5)
+tk.Button(frame_botoes, text="-", width=5, command=lambda: calcular("-")).grid(row=0, column=1, padx=5)
+tk.Button(frame_botoes, text="*", width=5, command=lambda: calcular("*")).grid(row=0, column=2, padx=5)
+tk.Button(frame_botoes, text="/", width=5, command=lambda: calcular("/")).grid(row=0, column=3, padx=5)
+
+# Resultado
+resultado_label = tk.Label(janela, text="Resultado: ")
+resultado_label.pack(pady=10)
+
+# Loop da interface
+janela.mainloop()
