@@ -1,0 +1,48 @@
+import tkinter as tk
+from tkinter import messagebox
+import random
+import string
+
+def gerar_senha():
+    try:
+        maiuscula = random.choice(string.ascii_uppercase)
+        minusculas = random.choices(string.ascii_lowercase, k=5)
+        numero = random.choice(string.digits)
+        especial = random.choice("!@#$%&*")
+
+        senha_lista = [maiuscula] + minusculas + [numero] + [especial]
+        random.shuffle(senha_lista)
+
+        senha = "".join(senha_lista)
+        resultado_entry.delete(0, tk.END)
+        resultado_entry.insert(0, senha)
+
+    except Exception as e:
+        messagebox.showerror("Erro", str(e))
+
+# Janela principal
+janela = tk.Tk()
+janela.title("Gerador de Senhas")
+janela.geometry("350x200")
+janela.resizable(False, False)
+
+# Título
+tk.Label(janela, text="🔐 Gerador de Senhas", font=("Arial", 14, "bold")).pack(pady=10)
+
+# Campo de resultado
+resultado_entry = tk.Entry(janela, width=30, font=("Arial", 12), justify="center")
+resultado_entry.pack(pady=10)
+
+# Botão gerar
+tk.Button(janela, text="Gerar Senha", font=("Arial", 11),
+          command=gerar_senha).pack(pady=10)
+
+# Observação
+tk.Label(
+    janela,
+    text="1 maiúscula • 5 minúsculas • 1 número • 1 especial",
+    font=("Arial", 9)
+).pack()
+
+# Loop da interface
+janela.mainloop()
